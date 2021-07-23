@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS实现生成随机验证码并验证</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #wrap {
+            margin: 50px auto;
+            width: 500px;
+        }
+
+        #text {
+            height: 30px;
+            vertical-align: middle;
+            box-sizing: border-box;
+            text-indent: 2em;
+        }
+
+        #code {
+            display: inline-block;
+            vertical-align: middle;
+            width: 80px;
+            height: 30px;
+            background: #ccc;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            text-decoration: none;
+            padding-left: 7px;
+            font-weight: 900;
+            letter-spacing: 7px;
+        }
+
+        #btn {
+            width: 60px;
+            height: 30px;
+            outline: 0;
+            border: 0;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #FF6600;
+        }
+    </style>
+</head>
+
+<body>
+    <article id="wrap">
+        <input type="text" id="text" placeholder="请输入验证码">
+        <a href="javascript:" id="code"></a>
+        <input type="button" id="btn" value="验证">
+    </article>
+
+    <script>
+        'use strict'
+        //获取元素
+        let text = document.getElementById("text");
+        let code = document.getElementById("code");
+        let btn = document.getElementById("btn");
+
+        code.innerHTML = randomCode();
+        //点击code随机生成验证码
+        code.addEventListener('click', function () {
+            code.innerHTML = randomCode();
+        });
+
+        //生成m~n之间随机整数的函数
+        function rand(m, n) {
+            return parseInt(Math.random() * (n - m + 1)) + m;
+        }
+
+        //生成随机验证码的函数
+        function randomCode() {
+            let str = '';   //生成的验证码字符串
+            let num = 4;    //验证码的位数
+            let arr = [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            for (let i = 0; i < num; i++) {
+                let index = rand(0, arr.length - 1);
+                str += arr[index];
+            }
+            return str;
+        }
+
+        //验证功能的实现
+        btn.addEventListener('click', function () {
+            let userCode = text.value;             //获取用户输入的验证码
+            let systemCode = code.innerHTML;       //获取随机生成的验证码
+            if (userCode === '') {
+                code.innerHTML = randomCode();     //重置验证码
+                alert('请输入验证码');
+            } else if (userCode.toUpperCase() === systemCode.toUpperCase()) {
+                text.value = '';                   //清空用户输入的验证码
+                alert("验证成功！");
+            } else {
+                code.innerHTML = randomCode();     //重置验证码
+                text.value = '';
+                alert("验证失败，请再次验证");
+            }
+        });
+    </script>
+</body>
+
+</html>
