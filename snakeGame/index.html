@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇小游戏</title>
+    <link rel="stylesheet" href="css/snake.css">
+</head>
+
+<body>
+    <div class="box"></div>
+    <script src="js/game.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/snake.js"></script>
+    <script src="js/food.js"></script>
+    <script>
+        let box = document.querySelector(".box");
+        let row = 20;
+        let col = 20;
+        let x = 10;
+        let y = 10;
+        let map = new Map(box, row, col);
+        let snake = new Snake(
+            [
+                {
+                    x: 4,
+                    y: 5
+                },
+                {
+                    x: 5,
+                    y: 5
+                }, {
+                    x: 6,
+                    y: 5
+                }, {
+                    x: 7,
+                    y: 5
+                }, {
+                    x: 8,
+                    y: 5
+                },
+            ]
+        );
+        let food = new Food(x, y);
+        let game = new Game(map, snake, food);
+    </script>
+</body>
+
+</html>
